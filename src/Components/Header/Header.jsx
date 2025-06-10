@@ -53,8 +53,8 @@ const Header = () => {
     </ul>
   </div>
   <div className="navbar-end space-x-1">
-    <NavLink className="btn">Login</NavLink>
-    <NavLink className="btn">SignUp</NavLink>
+    <NavLink to='/login' className="btn border-teal-600">Login</NavLink>
+    <NavLink to='/register' className="btn border-teal-600">Register</NavLink>
   </div>
 </div>
         </div>
