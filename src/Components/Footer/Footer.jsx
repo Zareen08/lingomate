@@ -6,7 +6,7 @@ import { FaYoutube, FaLinkedin } from "react-icons/fa";
 const Footer = () => {
     return (
         <div>
-            <footer className="footer sm:footer-horizontal bg-teal-100 text-base-content justify-around p-10">
+            <footer className="footer sm:footer-horizontal bg-base-100 border-t-2 border-teal-600 text-base-content justify-around p-10">
   <nav>
     <h6 className="footer-title">Services</h6>
     <Link to='/services/#find-a-tutor' className="link link-hover">Find a Tutor</Link>
@@ -30,7 +30,7 @@ const Footer = () => {
  
 </footer>
 
-<footer className="footer bg-teal-100 text-base-content border-base-300 border-t px-10 py-4">
+<footer className="footer bg-base-100 text-base-content border-base-300 border-t px-10 py-4">
   <aside className="grid-flow-col items-center">
    <img src="/lingomate.png" alt="lingomate" className='w-30'/>
     <p>

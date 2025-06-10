@@ -11,7 +11,7 @@ const Header = () => {
       </li>
       <li>
         <NavLink to="/findtutors" className={({ isActive }) => isActive ? 'font-bold text-teal-600' : ''}>
-          Find tutors
+          Find Tutors
         </NavLink>
       </li>
       <li>
@@ -26,14 +26,14 @@ const Header = () => {
       </li>
       <li>
         <NavLink to="/bookedtutorials" className={({ isActive }) => isActive ? 'font-bold text-teal-600' : ''}>
-          My booked tutors
+          My Booked Tutors
         </NavLink>
       </li>
       </>
     )
     return (
         <div>
-            <div className="navbar bg-base-100 shadow-sm">
+            <div className="navbar bg-base-100 shadow-sm border-b-2 border-teal-600">
   <div className="navbar-start">
     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -53,8 +53,8 @@ const Header = () => {
     </ul>
   </div>
   <div className="navbar-end space-x-1">
-    <NavLink to='/login' className="btn border-teal-600">Login</NavLink>
-    <NavLink to='/register' className="btn border-teal-600">Register</NavLink>
+    <NavLink to='/login' className="btn border-teal-600 btn-xs lg:btn-md">Sign In</NavLink>
+    <NavLink to='/register' className="btn border-teal-600 btn-xs lg:btn-md">Sign Up</NavLink>
   </div>
 </div>
         </div>
