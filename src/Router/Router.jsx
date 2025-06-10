@@ -14,7 +14,23 @@ const router = createBrowserRouter([
         {
             index: true,
             Component: Home
-        }
+        },
+        {
+            path:'/findtutors',
+            Component: Home
+        },
+        {
+            path:'/addtutorials',
+            Component: Home
+        },
+        {
+            path:'/mytutorials',
+            Component: Home
+        },
+        {
+            path:'/bookedtutorials',
+            Component: Home
+        },
     ]
   },
 ]);
