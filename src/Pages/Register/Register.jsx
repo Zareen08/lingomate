@@ -2,8 +2,28 @@ import Lottie from 'lottie-react';
 import { FaGoogle, FaUser, FaEnvelope, FaLock, FaCamera } from 'react-icons/fa';
 import { Link } from 'react-router';
 import RegAnimation from '../../assets/RegAni/reg.json'
+import { use } from 'react';
+import { AuthContex } from '../../Provider/AuthContext';
 
 const Register = () => {
+  const {createUser}= use(AuthContex);
+
+  const handleReg = e => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email, password)
+    
+    createUser(email, password)
+    .then(result => {
+      console.log(result.user)
+    })
+    .catch(error=>{
+      console.log(error)
+    })
+
+  }
   return (
     <div className="min-h-screen bg-gradient-to-br from-base-100 to-base-200 flex flex-col">
       
@@ -23,7 +43,7 @@ const Register = () => {
         </div>
         <div className="card bg-base-100 w-full max-w-md shadow-2xl">
           <div className="card-body p-8">
-            <form  className="space-y-5">
+            <form onSubmit={handleReg} className="space-y-5">
               
               <div className="form-control">
                 <label className="label" htmlFor="name">

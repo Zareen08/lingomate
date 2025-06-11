@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { use } from 'react';
 import { Link } from 'react-router';
 import { FaEnvelope, FaLock, FaUserPlus } from 'react-icons/fa';
 import RegAnimation from '../../assets/RegAni/reg.json'
 import Lottie from 'lottie-react';
+import { AuthContex } from '../../Provider/AuthContext';
 
 const Login = () => {
+    const {signInUser}= use(AuthContex);
+    
+      const handleSign = e => {
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(email, password)
+
+        signInUser(email, password)
+        .then(result => {
+        console.log(result.user)
+        })
+        .catch(error=>{
+        console.log(error)
+        })
+        
+    
+      }
     return (
         <div className="min-h-screen bg-gradient-to-br from-base-100 to-base-200 flex flex-col">
             
@@ -14,9 +34,9 @@ const Login = () => {
             </header>
 
             
-            <main className="flex-grow flex items-center justify-center px-4 pb-12">
+            <main className="flex-grow flex flex-col md:flex-row items-center justify-center px-4 pb-12">
 
-                <div className='w-130'>
+                <div className='w-30 md:w-130'>
               
                 <Lottie
                  animationData={RegAnimation}
@@ -25,7 +45,7 @@ const Login = () => {
         </div>
                 <div className="card bg-base-100 w-full max-w-md shadow-2xl">
                     <div className="card-body p-8">
-                        <form className="space-y-6">
+                        <form onSubmit={handleSign} className="space-y-6">
                             
                             <div className="form-control">
                                 <label className="label" htmlFor="email">

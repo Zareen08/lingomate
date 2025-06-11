@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { use } from 'react';
 import { NavLink } from 'react-router';
+import { AuthContex } from '../../Provider/AuthContext';
 
 const Header = () => {
+    const {user, logOut} =use(AuthContex);
+    const handleLogout = ()=>{
+      logOut()
+      .then(()=>{
+        console.log('signed out user')
+      })
+      .catch(error=>{
+        console.log(error)
+      })
+    }
     const menuItems = (
     <>
       <li>
@@ -53,10 +64,15 @@ const Header = () => {
     </ul>
   </div>
   <div className="navbar-end space-x-1">
-    <NavLink to='/login' className="btn border-teal-600 btn-xs lg:btn-md">Sign In</NavLink>
-    <NavLink to='/register' className="btn border-teal-600 btn-xs lg:btn-md">Sign Up</NavLink>
+    {
+      user ? <button onClick={handleLogout} className='btn bg-teal-600 text-white'>Sign Out</button> : 
+      <>
+      <NavLink to='/login' className="btn border-teal-600 btn-xs lg:btn-md">Sign In</NavLink>
+      <NavLink to='/register' className="btn border-teal-600 btn-xs lg:btn-md">Sign Up</NavLink>
+      </>
+    }
   </div>
-</div>
+  </div>
         </div>
     );
 };
