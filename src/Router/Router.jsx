@@ -7,9 +7,9 @@ import MainLayout from "../Layout/MainLayout";
 import Home from "../Pages/Home/Home";
 import Register from "../Pages/Register/Register";
 import Login from "../Pages/Login/Login";
-import Services from "../Pages/Home/Services/Services";
 import Company from "../Pages/Company/Company";
 import Legal from "../Pages/Legal/Legal";
+import Services from "../Pages/Services/Services";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +18,7 @@ const router = createBrowserRouter([
     children: [
         {
             index: true,
+            loader: ()=>fetch('http://localhost:4000/categories'),
             Component: Home
         },
         {
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
         },
         {
             path:'/services',
-            Component: Services
+            Component: Services 
         },
         {
             path:'/company',
