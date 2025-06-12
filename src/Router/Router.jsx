@@ -12,6 +12,8 @@ import Legal from "../Pages/Legal/Legal";
 import Services from "../Pages/Services/Services";
 import AddTutorials from "../Pages/AddTutorial/AddTutorials";
 import CatLangs from "../Pages/CatLangs/CatLangs";
+import MyTutorials from "../Pages/MyTutorials/MyTutorials";
+import UpdateTutorial from "../Pages/UpdateTutorial/UpdateTutorial";
 
 const router = createBrowserRouter([
   {
@@ -39,7 +41,13 @@ const router = createBrowserRouter([
         },
         {
             path:'/mytutorials',
-            Component: Home
+            loader:()=>fetch('http://localhost:4000/tutorials'),
+            Component: MyTutorials
+        },
+        {
+            path: '/updateTutorial/:id',
+            loader: ({ params }) => fetch(`http://localhost:4000/tutorials/${params.id}`),
+            Component: UpdateTutorial
         },
         {
             path:'/bookedtutorials',
