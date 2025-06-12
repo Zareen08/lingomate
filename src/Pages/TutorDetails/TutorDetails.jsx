@@ -16,7 +16,29 @@ const TutorDetails = () => {
   }, [id]);
 
   const handleBook = () => {
-    
+    const bookingData = {
+      tutorId: tutor._id,
+      image: tutor.image,
+      language: tutor.category,
+      price: tutor.price,
+      tutorEmail: tutor.email,
+      email: user?.email,
+    };
+
+    fetch('http://localhost:4000/bookings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(bookingData),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.insertedId) {
+          toast.success('Booked successfully!');
+        } else {
+          toast.error('Booking failed.');
+        }
+      })
+      .catch(err => toast.error('Something went wrong'));
   };
 
   if (!tutor) return <p className="text-center">Loading...</p>;

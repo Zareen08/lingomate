@@ -1,40 +1,116 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
-
+import { FaStar, FaRegStar, FaChalkboardTeacher, FaLanguage, FaInfoCircle } from 'react-icons/fa';
 
 const FindTutors = () => {
   const [tutors, setTutors] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('http://localhost:4000/tutorials')
       .then(res => res.json())
-      .then(data => setTutors(data))
-      .catch(err => console.error('Failed to fetch tutors:', err));
+      .then(data => {
+        setTutors(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Failed to fetch tutors:', err);
+        setLoading(false);
+      });
   }, []);
 
-  return (
-    <div className="max-w-7xl mx-auto px-4 py-10">
-      <h2 className="text-4xl mb-6 text-center text-teal-600 font-bold">Find Tutors</h2>
+  const renderStars = (rating) => {
+    const stars = [];
+    const fullStars = Math.floor(rating || 0);
+    const emptyStars = 5 - fullStars;
+    
+    for (let i = 0; i < fullStars; i++) {
+      stars.push(<FaStar key={`full-${i}`} className="text-yellow-400" />);
+    }
+    for (let i = 0; i < emptyStars; i++) {
+      stars.push(<FaRegStar key={`empty-${i}`} className="text-yellow-400" />);
+    }
+    
+    return stars;
+  };
 
-      {tutors.length === 0 ? (
-        <p className="text-center text-gray-500">No tutors available at the moment.</p>
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="text-center mb-12">
+        <h2 className="text-4xl font-bold text-teal-600 mb-3">Find Your Perfect Tutor</h2>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          Connect with expert tutors in various languages and subjects
+        </p>
+      </div>
+
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+        </div>
+      ) : tutors.length === 0 ? (
+        <div className="text-center py-12">
+          <FaChalkboardTeacher className="mx-auto text-5xl text-gray-400 mb-4" />
+          <p className="text-xl text-gray-500">No tutors available at the moment.</p>
+          <p className="text-gray-400">Please check back later.</p>
+        </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {tutors.map((tutor, index) => (
-            <div key={tutor._id} className="bg-white rounded-lg shadow p-5 hover:shadow-lg transition duration-300">
-              <img
-                src={tutor.image}
-                alt={tutor.name}
-                className="w-full h-48 object-cover rounded mb-4"
-              />
-              <h3 className="text-xl font-semibold text-gray-800 mb-1">{tutor.name}</h3>
-              <p className="text-sm text-gray-500 mb-2">Language: {tutor.category}</p>
-              <p className="text-sm text-gray-500 mb-2">Review: {tutor.review || "No reviews yet"}</p>
-              <p className="text-gray-700 text-sm">{tutor.description}</p>
-              <Link to={`/tutor/${tutor._id}`}
-              className="inline-block mt-4 px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-600 transition">
-              View Details
-              </Link>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {tutors.map((tutor) => (
+            <div 
+              key={tutor._id} 
+              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+            >
+              <div className="relative h-56 w-full">
+                <img
+                  src={tutor.image || '/default-tutor.jpg'}
+                  alt={tutor.name}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.src = '/default-tutor.jpg';
+                  }}
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                  <h3 className="text-xl font-bold text-white">{tutor.name}</h3>
+                </div>
+              </div>
+
+              <div className="p-6">
+                <div className="flex items-center mb-3">
+                  <FaLanguage className="text-teal-600 mr-2" />
+                  <span className="text-sm font-medium text-gray-600">
+                    {tutor.category}
+                  </span>
+                </div>
+
+                <div className="flex items-center mb-4">
+                  <div className="flex mr-2">
+                    {renderStars(tutor.rating)}
+                  </div>
+                  <span className="text-sm text-gray-500">
+                    ({tutor.reviews?.length || 0} reviews)
+                  </span>
+                </div>
+
+                <p className="text-gray-600 text-sm mb-5 line-clamp-3">
+                  {tutor.description}
+                </p>
+
+                <div className="flex justify-between items-center">
+                  <div>
+                    <span className="text-2xl font-bold text-teal-600">
+                      ${tutor.price}
+                    </span>
+                    <span className="text-gray-500 text-sm">/hour</span>
+                  </div>
+                  <Link
+                    to={`/tutor/${tutor._id}`}
+                    className="flex items-center px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+                  >
+                    <FaInfoCircle className="mr-2" />
+                    Details
+                  </Link>
+                </div>
+              </div>
             </div>
           ))}
         </div>
