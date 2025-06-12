@@ -14,6 +14,8 @@ import AddTutorials from "../Pages/AddTutorial/AddTutorials";
 import CatLangs from "../Pages/CatLangs/CatLangs";
 import MyTutorials from "../Pages/MyTutorials/MyTutorials";
 import UpdateTutorial from "../Pages/UpdateTutorial/UpdateTutorial";
+import FindTutors from "../Pages/FindTutors/FindTutors";
+import TutorDetails from "../Pages/TutorDetails/TutorDetails";
 
 const router = createBrowserRouter([
   {
@@ -27,8 +29,8 @@ const router = createBrowserRouter([
         },
         {
             path:'/findtutors',
-            loader: ()=>fetch('http://localhost:4000/categories'),
-            Component: Home
+            loader: ()=>fetch('http://localhost:4000/tutorials'),
+            Component: FindTutors
         },
         {
             path:'/findtutors/:id',
@@ -38,6 +40,11 @@ const router = createBrowserRouter([
         {
             path:'/addtutorials',
             Component: AddTutorials
+        },
+        {
+            path: '/tutor/:id',
+            Component: TutorDetails
+           
         },
         {
             path:'/mytutorials',
