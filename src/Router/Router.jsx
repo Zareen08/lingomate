@@ -11,16 +11,18 @@ import Company from "../Pages/Company/Company";
 import Legal from "../Pages/Legal/Legal";
 import Services from "../Pages/Services/Services";
 import AddTutorials from "../Pages/AddTutorial/AddTutorials";
-import CatLangs from "../Pages/CatLangs/CatLangs";
 import MyTutorials from "../Pages/MyTutorials/MyTutorials";
 import UpdateTutorial from "../Pages/UpdateTutorial/UpdateTutorial";
 import FindTutors from "../Pages/FindTutors/FindTutors";
 import TutorDetails from "../Pages/TutorDetails/TutorDetails";
 import MyBooked from "../Pages/MyBooked/MyBooked";
+import Error from "../Components/Error/Error";
+import FindByCat from "../Pages/FindByCat/FindByCat";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    errorElement: <Error></Error>,
     Component: MainLayout,
     children: [
         {
@@ -34,9 +36,9 @@ const router = createBrowserRouter([
             Component: FindTutors
         },
         {
-            path:'/findtutors/:id',
-            loader:({params})=>fetch(`http://localhost:4000/categories/${params.id}`),
-            Component:CatLangs
+            path:'/findtutors/:category',
+            
+            Component:FindByCat
         },
         {
             path:'/addtutorials',

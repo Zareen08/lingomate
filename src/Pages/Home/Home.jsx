@@ -22,7 +22,7 @@ const Home = () => {
                <>
                 <div  className='mt-5 mb-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ' >
                 {
-                    langs.map(lang=> <Link to={`/findtutors/${lang._id}`}>
+                    langs.map(lang=> <Link to={`/findtutors/${lang.title}`}>
                     <LangCards 
                     key={lang._id}
                     lang={lang} 
