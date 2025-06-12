@@ -20,16 +20,18 @@ const Home = () => {
             <h1 className="text-4xl md:text-5xl font-bold text-teal-700 mb-4">Featured Languages</h1>
             </div>
                <>
-                <Link to={'/'} className='mt-5 mb-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ' >
+                <div  className='mt-5 mb-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ' >
                 {
-                    langs.map(lang=> <LangCards 
+                    langs.map(lang=> <Link to={`/findtutors/${lang._id}`}>
+                    <LangCards 
                     key={lang._id}
                     lang={lang} 
                     langs={langs}
                     setLang={setLang}
-                    ></LangCards>)
+                    ></LangCards>
+                    </Link>)
                 }
-                </Link>
+                </div>
                </>
             </div>
             <HowItWorks></HowItWorks>

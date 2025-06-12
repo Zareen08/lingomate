@@ -10,6 +10,8 @@ import Login from "../Pages/Login/Login";
 import Company from "../Pages/Company/Company";
 import Legal from "../Pages/Legal/Legal";
 import Services from "../Pages/Services/Services";
+import AddTutorials from "../Pages/AddTutorial/AddTutorials";
+import CatLangs from "../Pages/CatLangs/CatLangs";
 
 const router = createBrowserRouter([
   {
@@ -23,11 +25,17 @@ const router = createBrowserRouter([
         },
         {
             path:'/findtutors',
+            loader: ()=>fetch('http://localhost:4000/categories'),
             Component: Home
         },
         {
+            path:'/findtutors/:id',
+            loader:({params})=>fetch(`http://localhost:4000/categories/${params.id}`),
+            Component:CatLangs
+        },
+        {
             path:'/addtutorials',
-            Component: Home
+            Component: AddTutorials
         },
         {
             path:'/mytutorials',

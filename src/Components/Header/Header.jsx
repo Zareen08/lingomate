@@ -80,7 +80,7 @@ const Header = () => {
                 className="w-10 h-10 rounded-full border-2 border-teal-600 cursor-pointer"
               />
             </div>
-            <button onClick={handleLogout} className="btn btn-sm bg-teal-600 text-white hover:bg-teal-700">
+            <button onClick={handleLogout} className="btn btn-sm bg-gradient-to-r from-teal-600 to-teal-400 text-white hover:bg-teal-700">
               Sign Out
             </button>
           </>
