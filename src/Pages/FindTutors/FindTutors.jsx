@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
-import { FaStar, FaRegStar, FaChalkboardTeacher, FaLanguage, FaInfoCircle } from 'react-icons/fa';
+import {
+  FaStar,
+  FaChalkboardTeacher,
+  FaLanguage,
+  FaInfoCircle,
+} from 'react-icons/fa';
 
 const FindTutors = () => {
   const [tutors, setTutors] = useState([]);
@@ -18,21 +23,6 @@ const FindTutors = () => {
         setLoading(false);
       });
   }, []);
-
-  const renderStars = (rating) => {
-    const stars = [];
-    const fullStars = Math.floor(rating || 0);
-    const emptyStars = 5 - fullStars;
-    
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(<FaStar key={`full-${i}`} className="text-yellow-400" />);
-    }
-    for (let i = 0; i < emptyStars; i++) {
-      stars.push(<FaRegStar key={`empty-${i}`} className="text-yellow-400" />);
-    }
-    
-    return stars;
-  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -55,9 +45,9 @@ const FindTutors = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {tutors.map((tutor) => (
-            <div 
-              key={tutor._id} 
+          {tutors.map(tutor => (
+            <div
+              key={tutor._id}
               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
             >
               <div className="relative h-56 w-full">
@@ -83,11 +73,11 @@ const FindTutors = () => {
                 </div>
 
                 <div className="flex items-center mb-4">
-                  <div className="flex mr-2">
-                    {renderStars(tutor.rating)}
+                  <div className="text-yellow-500 flex items-center mr-2">
+                    <FaStar className="mr-1" />
                   </div>
                   <span className="text-sm text-gray-500">
-                    ({tutor.reviews?.length || 0} reviews)
+                    {tutor.review || 0} review{(tutor.review || 0) !== 1 && 's'}
                   </span>
                 </div>
 

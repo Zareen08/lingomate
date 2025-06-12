@@ -13,7 +13,7 @@ const AddTutorials = () => {
     const formData = new FormData(form);
     const tutorData = Object.fromEntries(formData.entries());
     console.log(tutorData)
-    tutorData.review = 0; 
+    
     
 
     fetch('http://localhost:4000/tutorials', {
@@ -103,7 +103,7 @@ const AddTutorials = () => {
 
             
             <fieldset className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+              <label className=" text-sm font-medium text-gray-700 mb-1 flex items-center">
                 <FaInfoCircle className="mr-2 text-teal-600" />
                 Tutorial Image URL
               </label>
@@ -118,7 +118,7 @@ const AddTutorials = () => {
             </fieldset>
 
             <fieldset>
-              <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+              <label className=" text-sm font-medium text-gray-700 mb-1 flex items-center">
                 <FaLanguage className="mr-2 text-teal-600" />
                 Language
               </label>
