@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
-import {
-  FaStar,
-  FaChalkboardTeacher,
-  FaLanguage,
-  FaInfoCircle,
-} from 'react-icons/fa';
+import { FaStar, FaChalkboardTeacher, FaLanguage, FaInfoCircle,} from 'react-icons/fa';
 
 const FindTutors = () => {
-  const [tutors, setTutors] = useState([]);
+  const [allTutors, setAllTutors] = useState([]);
+  const [filteredTutors, setFilteredTutors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
+    
     fetch('http://localhost:4000/tutorials')
       .then(res => res.json())
       .then(data => {
-        setTutors(data);
+        setAllTutors(data);
+        setFilteredTutors(data); 
         setLoading(false);
       })
       .catch(err => {
@@ -24,6 +23,14 @@ const FindTutors = () => {
       });
   }, []);
 
+  useEffect(() => {
+    
+    const filtered = allTutors.filter(tutor =>
+      tutor.category?.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredTutors(filtered);
+  }, [searchText, allTutors]);
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-12">
@@ -31,21 +38,29 @@ const FindTutors = () => {
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
           Connect with expert tutors in various languages and subjects
         </p>
+
+        
+        <input
+          type="text"
+          placeholder="Search by language..."
+          value={searchText}
+          onChange={e => setSearchText(e.target.value)}
+          className="mt-6 px-4 py-2 border rounded-md w-full max-w-md mx-auto text-gray-700"
+        />
       </div>
 
       {loading ? (
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
         </div>
-      ) : tutors.length === 0 ? (
+      ) : filteredTutors.length === 0 ? (
         <div className="text-center py-12">
           <FaChalkboardTeacher className="mx-auto text-5xl text-gray-400 mb-4" />
-          <p className="text-xl text-gray-500">No tutors available at the moment.</p>
-          <p className="text-gray-400">Please check back later.</p>
+          <p className="text-xl text-gray-500">No tutors found for "{searchText}".</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {tutors.map(tutor => (
+          {filteredTutors.map(tutor => (
             <div
               key={tutor._id}
               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
