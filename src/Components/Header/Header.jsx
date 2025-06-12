@@ -1,18 +1,15 @@
-import React, { use } from 'react';
-import { NavLink } from 'react-router';
+import React, { useContext } from 'react';
+import { NavLink } from 'react-router'; 
 import { AuthContex } from '../../Provider/AuthContext';
+import Theme from '../Theme/Theme';
 
 const Header = () => {
-  const { user, logOut } = use(AuthContex);
+  const { user, logOut } = useContext(AuthContex); 
 
   const handleLogout = () => {
     logOut()
-      .then(() => {
-        console.log('signed out user');
-      })
-      .catch(error => {
-        console.log(error);
-      });
+      .then(() => console.log('signed out user'))
+      .catch(error => console.log(error));
   };
 
   const menuItems = (
@@ -27,21 +24,26 @@ const Header = () => {
           Find Tutors
         </NavLink>
       </li>
-      <li>
-        <NavLink to="/addtutorials" className={({ isActive }) => isActive ? 'font-bold text-teal-600' : ''}>
-          Add Tutorials
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/mytutorials" className={({ isActive }) => isActive ? 'font-bold text-teal-600' : ''}>
-          My Tutorials
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/bookedtutorials" className={({ isActive }) => isActive ? 'font-bold text-teal-600' : ''}>
-          My Booked Tutors
-        </NavLink>
-      </li>
+
+      {user && (
+        <>
+          <li>
+            <NavLink to="/addtutorials" className={({ isActive }) => isActive ? 'font-bold text-teal-600' : ''}>
+              Add Tutorials
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/mytutorials" className={({ isActive }) => isActive ? 'font-bold text-teal-600' : ''}>
+              My Tutorials
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/bookedtutorials" className={({ isActive }) => isActive ? 'font-bold text-teal-600' : ''}>
+              My Booked Tutors
+            </NavLink>
+          </li>
+        </>
+      )}
     </>
   );
 
@@ -61,7 +63,7 @@ const Header = () => {
             {menuItems}
           </ul>
         </div>
-        <img src='/lingomate.png' alt="LingoMate" className="btn btn-ghost text-xl w-25 h-16" />
+        <img src="/lingomate.png" alt="LingoMate" className="btn btn-ghost text-xl w-25 h-16" />
       </div>
 
       <div className="navbar-center hidden lg:flex">
@@ -90,6 +92,7 @@ const Header = () => {
             <NavLink to="/register" className="btn border-teal-600 btn-xs lg:btn-md">Sign Up</NavLink>
           </>
         )}
+        <Theme />
       </div>
     </div>
   );

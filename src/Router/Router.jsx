@@ -18,6 +18,8 @@ import TutorDetails from "../Pages/TutorDetails/TutorDetails";
 import MyBooked from "../Pages/MyBooked/MyBooked";
 import Error from "../Components/Error/Error";
 import FindByCat from "../Pages/FindByCat/FindByCat";
+import PrivateRoute from "./PrivateRoute";
+import Loader from "../Components/Loader/Loader";
 
 const router = createBrowserRouter([
   {
@@ -27,11 +29,13 @@ const router = createBrowserRouter([
     children: [
         {
             index: true,
+            hydrateFallbackElement:<Loader></Loader>,
             loader: ()=>fetch('http://localhost:4000/categories'),
             Component: Home
         },
         {
             path:'/findtutors',
+            hydrateFallbackElement:<Loader></Loader>,
             loader: ()=>fetch('http://localhost:4000/tutorials'),
             Component: FindTutors
         },
@@ -42,26 +46,37 @@ const router = createBrowserRouter([
         },
         {
             path:'/addtutorials',
-            Component: AddTutorials
+            element: <PrivateRoute>
+                <AddTutorials></AddTutorials>
+            </PrivateRoute>
         },
         {
             path: '/tutor/:id',
-            Component: TutorDetails
+            element: <PrivateRoute>
+                <TutorDetails></TutorDetails>
+            </PrivateRoute>
            
         },
         {
             path:'/mytutorials',
+            hydrateFallbackElement:<Loader></Loader>,
             loader:()=>fetch('http://localhost:4000/tutorials'),
-            Component: MyTutorials
+            element: <PrivateRoute>
+                <MyTutorials></MyTutorials>
+            </PrivateRoute>
+            
         },
         {
             path: '/updateTutorial/:id',
+            hydrateFallbackElement:<Loader></Loader>,
             loader: ({ params }) => fetch(`http://localhost:4000/tutorials/${params.id}`),
             Component: UpdateTutorial
         },
         {
             path:'/bookedtutorials',
-            Component: MyBooked
+            element: <PrivateRoute>
+                <MyBooked></MyBooked>
+                </PrivateRoute>
         },
         {
             path:'/services',
