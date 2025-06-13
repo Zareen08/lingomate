@@ -18,7 +18,7 @@ const UpdateTutorial = () => {
     const formData = new FormData(form);
     const updatedData = Object.fromEntries(formData.entries());
     
-    fetch(`http://localhost:4000/tutorials/${_id}`, {
+    fetch(`https://lingomate-server-site.vercel.app/tutorials/${_id}`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json'

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AuthContex } from './AuthContext';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import { auth } from '../Firebase/firebase.init';
+import axios from 'axios';
 
 const gProvider = new GoogleAuthProvider
 
@@ -33,7 +34,18 @@ const AuthProvider = ({children}) => {
         const unSubscribe = onAuthStateChanged(auth, currentUser =>{
          setUser(currentUser);
          setLoading(false)
-         console.log('user ', currentUser)
+         if(currentUser?.email){
+            const userData = {email: currentUser.email}
+            axios.post('https://lingomate-server-site.vercel.app/jwt', userData, {
+                withCredentials: true
+            })
+            .then(res =>{
+                console.log(res.data)
+                   
+            })
+            .catch(error=> console.log(error))
+         }
+        //  console.log('user ', currentUser)
         })
         return ()=>{
             unSubscribe();

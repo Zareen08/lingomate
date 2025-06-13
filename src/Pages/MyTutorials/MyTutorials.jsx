@@ -11,7 +11,7 @@ const MyTutorials = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch('http://localhost:4000/tutorials')
+      fetch('https://lingomate-server-site.vercel.app/tutorials', {credentials: 'include'})
         .then(res => res.json())
         .then(data => {
           const userTutorials = data.filter(tut => tut.email === user.email);
@@ -38,7 +38,7 @@ const handleDelete = (id) => {
     
   }).then((result) => {
     if (result.isConfirmed) {
-      fetch(`http://localhost:4000/tutorials/${id}`, {
+      fetch(`https://lingomate-server-site.vercel.app/tutorials/${id}`, {
         method: 'DELETE'
       })
       .then(res => res.json())

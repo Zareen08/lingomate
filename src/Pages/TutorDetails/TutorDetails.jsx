@@ -9,7 +9,7 @@ const TutorDetails = () => {
   const [tutor, setTutor] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/tutorials/${id}`)
+    fetch(`https://lingomate-server-site.vercel.app/tutorials/${id}`)
       .then(res => res.json())
       .then(data => setTutor(data))
       .catch(err => toast.error('Failed to load tutor details'));
@@ -25,7 +25,7 @@ const TutorDetails = () => {
       email: user?.email,
     };
 
-    fetch('http://localhost:4000/bookings', {
+    fetch('https://lingomate-server-site.vercel.app/bookings', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(bookingData),

@@ -30,17 +30,17 @@ const router = createBrowserRouter([
         {
             index: true,
             hydrateFallbackElement:<Loader></Loader>,
-            loader: ()=>fetch('http://localhost:4000/categories'),
+            loader: ()=>fetch('https://lingomate-server-site.vercel.app/categories'),
             Component: Home
         },
         {
             path:'/findtutors',
             hydrateFallbackElement:<Loader></Loader>,
-            loader: ()=>fetch('http://localhost:4000/tutorials'),
+            loader: ()=>fetch('https://lingomate-server-site.vercel.app/tutorials'),
             Component: FindTutors
         },
         {
-            path:'/findtutors/:category',
+            path:'findtutors/:category',
             
             Component:FindByCat
         },
@@ -60,7 +60,7 @@ const router = createBrowserRouter([
         {
             path:'/mytutorials',
             hydrateFallbackElement:<Loader></Loader>,
-            loader:()=>fetch('http://localhost:4000/tutorials'),
+            loader:()=>fetch('https://lingomate-server-site.vercel.app/tutorials'),
             element: <PrivateRoute>
                 <MyTutorials></MyTutorials>
             </PrivateRoute>
@@ -69,7 +69,7 @@ const router = createBrowserRouter([
         {
             path: '/updateTutorial/:id',
             hydrateFallbackElement:<Loader></Loader>,
-            loader: ({ params }) => fetch(`http://localhost:4000/tutorials/${params.id}`),
+            loader: ({ params }) => fetch(`https://lingomate-server-site.vercel.app/tutorials/${params.id}`),
             Component: UpdateTutorial
         },
         {

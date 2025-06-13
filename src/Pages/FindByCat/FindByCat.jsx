@@ -10,7 +10,7 @@ const FindByCat = () => {
   useEffect(() => {
     if (!category) return;
 
-    fetch(`http://localhost:4000/tutorials?category=${encodeURIComponent(category)}`)
+    fetch(`https://lingomate-server-site.vercel.app/tutorials?category=${encodeURIComponent(category)}`)
       .then(res => res.json())
       .then(data => {
         setTutors(data);

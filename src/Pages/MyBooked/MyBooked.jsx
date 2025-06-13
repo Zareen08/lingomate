@@ -11,7 +11,7 @@ const MyBooked = () => {
   useEffect(() => {
     if (!user?.email) return;
 
-    fetch(`http://localhost:4000/bookings?email=${user.email}`)
+    fetch(`https://lingomate-server-site.vercel.app/bookings?email=${user.email}`,{credentials:'include'})
       .then(res => res.json())
       .then(data => {
         setBookedTutors(data);
@@ -25,7 +25,7 @@ const MyBooked = () => {
 
   
   const handleReview = (tutorId) => {
-    fetch(`http://localhost:4000/tutorials/${tutorId}/review`, {
+    fetch(`https://lingomate-server-site.vercel.app/tutorials/${tutorId}/review`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'

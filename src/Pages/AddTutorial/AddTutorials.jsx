@@ -16,7 +16,7 @@ const AddTutorials = () => {
     
     
 
-    fetch('http://localhost:4000/tutorials', {
+    fetch('https://lingomate-server-site.vercel.app/tutorials', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
@@ -26,7 +26,7 @@ const AddTutorials = () => {
       .then(res => res.json())
       .then(data => {
         if (data.insertedId) {
-       toast.success("Profile Submitted! Your tutor profile is under review.", {
+        toast.success("Profile Submitted! Your tutor profile is under review.", {
         position: "top-right",
         autoClose: 4000,
         hideProgressBar: false,

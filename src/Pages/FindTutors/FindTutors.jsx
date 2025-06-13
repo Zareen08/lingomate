@@ -10,7 +10,7 @@ const FindTutors = () => {
 
   useEffect(() => {
     
-    fetch('http://localhost:4000/tutorials')
+    fetch('https://lingomate-server-site.vercel.app/tutorials')
       .then(res => res.json())
       .then(data => {
         setAllTutors(data);
