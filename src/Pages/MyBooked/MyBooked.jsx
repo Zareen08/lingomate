@@ -6,12 +6,16 @@ const MyBooked = () => {
   const { user } = useContext(AuthContex);
   const [bookedTutors, setBookedTutors] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  
+   
+  console.log(user.accessToken)
   useEffect(() => {
     if (!user?.email) return;
 
-    fetch(`https://lingomate-server-site.vercel.app/bookings?email=${user.email}`,{credentials:'include'})
+    fetch(`https://lingomate-server-site.vercel.app/bookings?email=${user.email}`,{
+      headers:{
+        authorization: `Bearer ${user.accessToken}`
+      }
+    })
       .then(res => res.json())
       .then(data => {
         setBookedTutors(data);
@@ -28,8 +32,9 @@ const MyBooked = () => {
     fetch(`https://lingomate-server-site.vercel.app/tutorials/${tutorId}/review`, {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       },
+      
       body: JSON.stringify({ email: user.email }) 
     })
       .then(res => res.json())
@@ -67,11 +72,10 @@ const MyBooked = () => {
             <p><strong>Price:</strong> ${tutor.price}</p>
             <p><strong>Reviews:</strong> {tutor.review || 0}</p>
           </div>
-          <button
-            onClick={() => handleReview(tutor.tutorId)}
-            className="btn bg-teal-600 text-white hover:bg-teal-700 px-4 py-2"
-          >
-            Review
+          <button onClick={() => handleReview(tutor.tutorId)}
+          className="btn bg-teal-600 text-white hover:bg-teal-700 px-4 py-2"
+          disabled={tutor.reviewed}>
+          {tutor.reviewed ? 'Reviewed' : 'Review'}
           </button>
         </div>
       ))}

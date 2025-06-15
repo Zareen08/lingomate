@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged,
 import { auth } from '../Firebase/firebase.init';
 import axios from 'axios';
 
-const gProvider = new GoogleAuthProvider
+const gProvider = new GoogleAuthProvider()
 
 const AuthProvider = ({children}) => {
     const [loading, setLoading] = useState(true);
@@ -30,27 +30,28 @@ const AuthProvider = ({children}) => {
         return signOut(auth)
     }
 
-    useEffect(()=>{
-        const unSubscribe = onAuthStateChanged(auth, currentUser =>{
-         setUser(currentUser);
-         setLoading(false)
-         if(currentUser?.email){
-            const userData = {email: currentUser.email}
-            axios.post('https://lingomate-server-site.vercel.app/jwt', userData, {
-                withCredentials: true
-            })
-            .then(res =>{
-                // console.log(res.data)
-                   
-            })
-            .catch(error=> console.log(error))
-         }
-        //  console.log('user ', currentUser)
-        })
-        return ()=>{
-            unSubscribe();
-        }
-    },[])
+   useEffect(() => {
+  const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
+    setUser(currentUser);
+    setLoading(false);
+
+    if (currentUser) {
+      try {
+        const idToken = await currentUser.getIdToken(true); 
+        const res = await axios.post(
+          'https://lingomate-server-site.vercel.app/jwt',
+          { token: idToken },    
+        );
+        console.log('JWT cookie response:', res.data);
+      } catch (error) {
+        console.error('JWT fetch error:', error);
+      }
+    }
+  });
+
+  return () => unSubscribe();
+}, []);
+
     const authInfo ={
       loading,
       user, 

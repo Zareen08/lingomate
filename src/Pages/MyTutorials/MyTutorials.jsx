@@ -11,7 +11,11 @@ const MyTutorials = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch('https://lingomate-server-site.vercel.app/tutorials', {credentials: 'include'})
+      fetch('https://lingomate-server-site.vercel.app/tutorials', {
+         headers:{
+        authorization: `Bearer ${user.accessToken}`
+      }
+      })
         .then(res => res.json())
         .then(data => {
           const userTutorials = data.filter(tut => tut.email === user.email);
