@@ -53,8 +53,8 @@ const Register = () => {
         <p className="mt-2 text-base-content/80">Start your language learning journey today</p>
       </header>
 
-      <main className="flex-grow flex items-center justify-center gap-5 px-4 pb-12">
-        <div className='w-130'>
+      <main className="flex-grow flex flex-col lg:flex-row items-center justify-center gap-5 px-4 pb-12">
+        <div className='w-30 lg:w-130'>
           <Lottie animationData={RegAnimation} loop={true} />
         </div>
 
