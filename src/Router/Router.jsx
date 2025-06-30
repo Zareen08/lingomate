@@ -20,6 +20,8 @@ import Error from "../Components/Error/Error";
 import FindByCat from "../Pages/FindByCat/FindByCat";
 import PrivateRoute from "./PrivateRoute";
 import Loader from "../Components/Loader/Loader";
+import Dashboard from "../Pages/Dashboard/Dashboard";
+import DashboardLayout from "../Layout/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -44,12 +46,7 @@ const router = createBrowserRouter([
             
             Component:FindByCat
         },
-        {
-            path:'/addtutorials',
-            element: <PrivateRoute>
-                <AddTutorials></AddTutorials>
-            </PrivateRoute>
-        },
+        
         {
             path: '/tutor/:id',
             element: <PrivateRoute>
@@ -57,27 +54,14 @@ const router = createBrowserRouter([
             </PrivateRoute>
            
         },
-        {
-            path:'/mytutorials',
-            hydrateFallbackElement:<Loader></Loader>,
-            loader:()=>fetch('https://lingomate-server-site.vercel.app/tutorials'),
-            element: <PrivateRoute>
-                <MyTutorials></MyTutorials>
-            </PrivateRoute>
-            
-        },
-        {
+        
+         {
             path: '/updateTutorial/:id',
             hydrateFallbackElement:<Loader></Loader>,
             loader: ({ params }) => fetch(`https://lingomate-server-site.vercel.app/tutorials/${params.id}`),
             Component: UpdateTutorial
         },
-        {
-            path:'/bookedtutorials',
-            element: <PrivateRoute>
-                <MyBooked></MyBooked>
-                </PrivateRoute>
-        },
+        
         {
             path:'/services',
             Component: Services 
@@ -100,6 +84,44 @@ const router = createBrowserRouter([
         },
     ]
   },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
+    errorElement: <Error />,
+    children: [
+      {
+        index: true,
+        Component: Dashboard
+      },
+      {
+            path:'mytutorials',
+            hydrateFallbackElement:<Loader></Loader>,
+            loader:()=>fetch('https://lingomate-server-site.vercel.app/tutorials'),
+            element: <PrivateRoute>
+                <MyTutorials></MyTutorials>
+            </PrivateRoute>
+            
+        },
+        {
+            path:'bookedtutorials',
+            element: <PrivateRoute>
+                <MyBooked></MyBooked>
+                </PrivateRoute>
+        },
+        {
+            path:'addtutorials',
+            element: <PrivateRoute>
+                <AddTutorials></AddTutorials>
+            </PrivateRoute>
+        },
+       
+
+    ]
+  }
 ]);
 
 export default router

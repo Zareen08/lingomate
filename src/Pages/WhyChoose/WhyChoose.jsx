@@ -64,11 +64,11 @@ const WhyChoose = () => {
     transition={{ delay: index * 0.1, duration: 0.5 }}
     viewport={{ once: true, margin: "-50px" }}
     >
-    <div className="h-full p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-base-200 group-hover:border-teal-300/30 flex flex-col items-center text-center">
+    <div className="h-full p-8 bg-base rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-base-200 group-hover:border-teal-300/30 flex flex-col items-center text-center">
     <div className={`w-20 h-20 ${feature.color} rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
     {feature.icon}
     </div>
-    <h3 className="text-2xl font-bold text-gray-800 mb-3">{feature.title}</h3>
+    <h3 className="text-2xl font-bold text-teal-600 mb-3">{feature.title}</h3>
     <p className="text-gray-600 mb-4 flex-grow">{feature.desc}</p>
     <div className="w-12 h-1 bg-teal-400 rounded-full mt-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
     </div>

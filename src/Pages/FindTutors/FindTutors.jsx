@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
-import { FaStar, FaChalkboardTeacher, FaLanguage, FaInfoCircle,} from 'react-icons/fa';
+import { FaStar, FaChalkboardTeacher, FaLanguage, FaInfoCircle } from 'react-icons/fa';
 
 const FindTutors = () => {
   const [allTutors, setAllTutors] = useState([]);
@@ -9,12 +9,11 @@ const FindTutors = () => {
   const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
-    
     fetch('https://lingomate-server-site.vercel.app/tutorials')
       .then(res => res.json())
       .then(data => {
         setAllTutors(data);
-        setFilteredTutors(data); 
+        setFilteredTutors(data);
         setLoading(false);
       })
       .catch(err => {
@@ -24,7 +23,6 @@ const FindTutors = () => {
   }, []);
 
   useEffect(() => {
-    
     const filtered = allTutors.filter(tutor =>
       tutor.category?.toLowerCase().includes(searchText.toLowerCase())
     );
@@ -32,45 +30,48 @@ const FindTutors = () => {
   }, [searchText, allTutors]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 dark:bg-gray-900">
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold text-teal-600 mb-3">Find Your Perfect Tutor</h2>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <h2 className="text-4xl font-bold text-teal-600 dark:text-teal-400 mb-3">
+          Find Your Perfect Tutor
+        </h2>
+        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           Connect with expert tutors in various languages and subjects
         </p>
 
-        
         <input
           type="text"
           placeholder="Search by language..."
           value={searchText}
           onChange={e => setSearchText(e.target.value)}
-          className="mt-6 px-4 py-2 border rounded-md w-full max-w-md mx-auto text-gray-700"
+          className="mt-6 px-4 py-2 border rounded-md w-full max-w-md mx-auto text-gray-700 dark:text-gray-200 dark:bg-gray-800 dark:border-gray-600"
         />
       </div>
 
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500 dark:border-teal-400"></div>
         </div>
       ) : filteredTutors.length === 0 ? (
         <div className="text-center py-12">
-          <FaChalkboardTeacher className="mx-auto text-5xl text-gray-400 mb-4" />
-          <p className="text-xl text-gray-500">No tutors found for "{searchText}".</p>
+          <FaChalkboardTeacher className="mx-auto text-5xl text-gray-400 dark:text-gray-600 mb-4" />
+          <p className="text-xl text-gray-500 dark:text-gray-400">
+            No tutors found for "{searchText}".
+          </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {filteredTutors.map(tutor => (
             <div
               key={tutor._id}
-              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+              className="bg-base dark:bg-gray-800 rounded-xl shadow-md dark:shadow-black/40 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col"
             >
               <div className="relative h-56 w-full">
                 <img
                   src={tutor.image || '/default-tutor.jpg'}
                   alt={tutor.name}
                   className="w-full h-full object-cover"
-                  onError={(e) => {
+                  onError={e => {
                     e.target.src = '/default-tutor.jpg';
                   }}
                 />
@@ -79,10 +80,10 @@ const FindTutors = () => {
                 </div>
               </div>
 
-              <div className="p-6">
+              <div className="p-6 flex flex-col flex-grow">
                 <div className="flex items-center mb-3">
-                  <FaLanguage className="text-teal-600 mr-2" />
-                  <span className="text-sm font-medium text-gray-600">
+                  <FaLanguage className="text-teal-600 dark:text-teal-400 mr-2" />
+                  <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
                     {tutor.category}
                   </span>
                 </div>
@@ -91,25 +92,25 @@ const FindTutors = () => {
                   <div className="text-yellow-500 flex items-center mr-2">
                     <FaStar className="mr-1" />
                   </div>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-gray-500 dark:text-gray-400">
                     {tutor.review || 0} review{(tutor.review || 0) !== 1 && 's'}
                   </span>
                 </div>
 
-                <p className="text-gray-600 text-sm mb-5 line-clamp-3">
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-5 line-clamp-3 flex-grow">
                   {tutor.description}
                 </p>
 
                 <div className="flex justify-between items-center">
                   <div>
-                    <span className="text-2xl font-bold text-teal-600">
+                    <span className="text-2xl font-bold text-teal-600 dark:text-teal-400">
                       ${tutor.price}
                     </span>
-                    <span className="text-gray-500 text-sm">/hour</span>
+                    <span className="text-gray-500 dark:text-gray-400 text-sm">/hour</span>
                   </div>
                   <Link
                     to={`/tutor/${tutor._id}`}
-                    className="flex items-center px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+                    className="flex items-center px-4 py-2 bg-teal-600 hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600 text-white rounded-lg transition-colors"
                   >
                     <FaInfoCircle className="mr-2" />
                     Details

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router";
+import { Link, useLocation } from "react-router";
 
 const CompanyPage = () => {
     const { hash } = useLocation();
@@ -108,17 +108,17 @@ const CompanyPage = () => {
           <p className="text-xl max-w-3xl mx-auto mb-10">
             We're always looking for passionate individuals to help shape the future of language learning.
           </p>
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
+          <div className="grid md:grid-cols-1 gap-8 mb-12">
             {[
               { title: "Language Tutor", type: "Remote" },
-              { title: "Customer Support", type: "Remote" }
+             
             ].map((job, index) => (
               <div key={index} className="card bg-base-200 shadow-lg hover:shadow-xl transition-shadow">
                 <div className="card-body text-left">
                   <h3 className="card-title">{job.title}</h3>
                   <p className="text-base-content/70 mb-4">{job.type}</p>
                   <div className="card-actions justify-end">
-                    <button className="btn bg-teal-600 text-white btn-sm">Apply Now</button>
+                    <Link to={'/dashboard/addtutorials'} className="btn bg-teal-600 text-white btn-sm">Apply Now</Link>
                   </div>
                 </div>
               </div>

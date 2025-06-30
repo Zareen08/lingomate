@@ -6,19 +6,22 @@ const MyBooked = () => {
   const { user } = useContext(AuthContex);
   const [bookedTutors, setBookedTutors] = useState([]);
   const [loading, setLoading] = useState(true);
-   
-  console.log(user.accessToken)
+
   useEffect(() => {
     if (!user?.email) return;
 
-    fetch(`https://lingomate-server-site.vercel.app/bookings?email=${user.email}`,{
-      headers:{
-        authorization: `Bearer ${user.accessToken}`
-      }
+    fetch(`https://lingomate-server-site.vercel.app/bookings?email=${user.email}`, {
+      headers: {
+        authorization: `Bearer ${user.accessToken}`,
+      },
     })
       .then(res => res.json())
       .then(data => {
-        setBookedTutors(data);
+        const updated = data.map(t => ({
+          ...t,
+          reviewed: t.reviewed || false, 
+        }));
+        setBookedTutors(updated);
         setLoading(false);
       })
       .catch(() => {
@@ -27,15 +30,13 @@ const MyBooked = () => {
       });
   }, [user]);
 
-  
-  const handleReview = (tutorId) => {
+  const handleReview = tutorId => {
     fetch(`https://lingomate-server-site.vercel.app/tutorials/${tutorId}/review`, {
       method: 'PATCH',
       headers: {
-        'content-type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      
-      body: JSON.stringify({ email: user.email }) 
+      body: JSON.stringify({ email: user.email }),
     })
       .then(res => res.json())
       .then(data => {
@@ -43,13 +44,17 @@ const MyBooked = () => {
           setBookedTutors(prev =>
             prev.map(t =>
               t.tutorId === tutorId
-                ? { ...t, review: (t.review || 0) + 1 }
+                ? {
+                    ...t,
+                    review: (t.review || 0) + 1,
+                    reviewed: true,
+                  }
                 : t
             )
           );
           toast.success('Thank you for your review!');
         } else {
-          toast.error('You already reviewed this tutor');
+          toast.warning('You already reviewed this tutor');
         }
       })
       .catch(() => {
@@ -57,25 +62,35 @@ const MyBooked = () => {
       });
   };
 
-  if (loading) return <p className="text-center">Loading your booked tutors...</p>;
-  if (!bookedTutors.length) return <p className="text-center">You have no booked tutors yet.</p>;
+  if (loading) return <p className="text-center py-12">Loading your booked tutors...</p>;
+
+  if (!bookedTutors.length) return <p className="text-center py-12">You have no booked tutors yet.</p>;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6 text-teal-600">My Booked Tutors</h1>
       {bookedTutors.map(tutor => (
         <div key={tutor._id} className="border rounded p-4 mb-6 flex items-center gap-6">
-          <img src={tutor.image} alt={tutor.name} className="w-24 h-24 rounded object-cover" />
+          <img
+            src={tutor.image || '/default-tutor.jpg'}
+            alt={tutor.name || 'Tutor'}
+            className="w-24 h-24 rounded object-cover"
+            onError={e => {
+              e.target.src = '/default-tutor.jpg';
+            }}
+          />
           <div className="flex-grow">
             <h2 className="text-xl font-semibold">{tutor.name || 'Tutor'}</h2>
             <p><strong>Language:</strong> {tutor.language || 'N/A'}</p>
             <p><strong>Price:</strong> ${tutor.price}</p>
             <p><strong>Reviews:</strong> {tutor.review || 0}</p>
           </div>
-          <button onClick={() => handleReview(tutor.tutorId)}
-          className="btn bg-teal-600 text-white hover:bg-teal-700 px-4 py-2"
-          disabled={tutor.reviewed}>
-          {tutor.reviewed ? 'Reviewed' : 'Review'}
+          <button
+            onClick={() => handleReview(tutor.tutorId)}
+            className={`btn px-4 py-2 ${tutor.reviewed ? 'bg-gray-400 cursor-not-allowed' : 'bg-teal-600 hover:bg-teal-700 text-white'}`}
+            disabled={tutor.reviewed}
+          >
+            {tutor.reviewed ? 'Reviewed' : 'Review'}
           </button>
         </div>
       ))}
