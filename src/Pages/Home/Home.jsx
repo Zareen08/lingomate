@@ -5,6 +5,7 @@ import HowItWorks from '../HowItWorks/HowItWorks';
 import WhyChoose from '../WhyChoose/WhyChoose';
 import { Link, useLoaderData } from 'react-router';
 import LangCards from '../LangCards/LangCards';
+import NewsLetter from '../Newsletter/NewsLetter';
 
 const Home = () => {
     const initialCats = useLoaderData();
@@ -36,6 +37,7 @@ const Home = () => {
             </div>
             <HowItWorks></HowItWorks>
             <WhyChoose></WhyChoose>
+            <NewsLetter></NewsLetter>
         </div>
     );
 };
