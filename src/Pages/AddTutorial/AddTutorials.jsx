@@ -50,8 +50,8 @@ const AddTutorials = () => {
   };
 
   return (
-    <div className='min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
-      <div className='max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden'>
+    <div className='min-h-screen bg-base-50 py-12 px-4 sm:px-6 lg:px-8'>
+      <div className='max-w-4xl mx-auto bg-base rounded-xl shadow-md overflow-hidden'>
         
         <div className='bg-gradient-to-r from-teal-600 to-teal-400 p-6 text-white'>
           <div className='flex items-center justify-center space-x-3'>
@@ -135,7 +135,6 @@ const AddTutorials = () => {
                 <option value="Chinese">Chinese</option>
                 <option value="Japanese">Japanese</option>
                 <option value="Arabic">Arabic</option>
-                <option value="Hindi">Hindi</option>
                 <option value="Russian">Russian</option>
               </select>
             </fieldset>
