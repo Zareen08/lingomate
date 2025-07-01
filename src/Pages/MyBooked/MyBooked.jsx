@@ -19,7 +19,7 @@ const MyBooked = () => {
       .then(data => {
         const updated = data.map(t => ({
           ...t,
-          reviewed: t.reviewed || false, 
+          reviewed: t.reviewed || false,
         }));
         setBookedTutors(updated);
         setLoading(false);
@@ -62,15 +62,18 @@ const MyBooked = () => {
       });
   };
 
-  if (loading) return <p className="text-center py-12">Loading your booked tutors...</p>;
-
-  if (!bookedTutors.length) return <p className="text-center py-12">You have no booked tutors yet.</p>;
+  if (loading) return <p className="text-center py-12 dark:text-gray-300">Loading your booked tutors...</p>;
+  if (!bookedTutors.length)
+    return <p className="text-center py-12 dark:text-gray-300">You have no booked tutors yet.</p>;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10">
-      <h1 className="text-3xl font-bold mb-6 text-teal-600">My Booked Tutors</h1>
+    <div className="max-w-4xl mx-auto px-4 py-10 dark:bg-gray-900">
+      <h1 className="text-3xl font-bold mb-6 text-teal-600 dark:text-teal-400">My Booked Tutors</h1>
       {bookedTutors.map(tutor => (
-        <div key={tutor._id} className="border rounded p-4 mb-6 flex items-center gap-6">
+        <div
+          key={tutor._id}
+          className="border rounded p-4 mb-6 flex items-center gap-6 bg-white dark:bg-gray-800 dark:border-gray-700"
+        >
           <img
             src={tutor.image || '/default-tutor.jpg'}
             alt={tutor.name || 'Tutor'}
@@ -79,7 +82,7 @@ const MyBooked = () => {
               e.target.src = '/default-tutor.jpg';
             }}
           />
-          <div className="flex-grow">
+          <div className="flex-grow text-gray-800 dark:text-gray-200">
             <h2 className="text-xl font-semibold">{tutor.name || 'Tutor'}</h2>
             <p><strong>Language:</strong> {tutor.language || 'N/A'}</p>
             <p><strong>Price:</strong> ${tutor.price}</p>
@@ -87,7 +90,11 @@ const MyBooked = () => {
           </div>
           <button
             onClick={() => handleReview(tutor.tutorId)}
-            className={`btn px-4 py-2 ${tutor.reviewed ? 'bg-gray-400 cursor-not-allowed' : 'bg-teal-600 hover:bg-teal-700 text-white'}`}
+            className={`px-4 py-2 rounded ${
+              tutor.reviewed
+                ? 'bg-gray-400 text-white cursor-not-allowed'
+                : 'bg-teal-600 hover:bg-teal-700 text-white'
+            }`}
             disabled={tutor.reviewed}
           >
             {tutor.reviewed ? 'Reviewed' : 'Review'}

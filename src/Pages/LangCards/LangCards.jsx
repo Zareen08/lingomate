@@ -15,7 +15,7 @@ const LangCards = ({ lang, setLang, langs }) => {
           />
         </figure>
         <div className="card-body items-center text-center pt-2 pb-6 px-6 flex-grow">
-          <h2 className="card-title text-lg font-semibold mb-2 text-gray-800">{title} Tutors</h2>
+          <h2 className="card-title text-lg font-semibold mb-2 text-teal-600">{title} Tutors</h2>
           <div className="flex items-center justify-center text-teal-600 group-hover:text-teal-700 transition-colors">
             <span className="text-sm font-medium mr-1.5">Find tutors</span>
             <HiOutlineArrowRight className="text-lg transition-transform group-hover:translate-x-1" />

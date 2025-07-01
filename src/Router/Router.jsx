@@ -22,6 +22,8 @@ import PrivateRoute from "./PrivateRoute";
 import Loader from "../Components/Loader/Loader";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import DashboardLayout from "../Layout/DashboardLayout";
+import Users from "../Pages/Users/Users";
+import Contacts from "../Pages/Contacts/Contacts";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +48,11 @@ const router = createBrowserRouter([
             
             Component:FindByCat
         },
+        {
+            path:'contacts',
+            
+            Component: Contacts
+        },
         
         {
             path: '/tutor/:id',
@@ -53,6 +60,12 @@ const router = createBrowserRouter([
                 <TutorDetails></TutorDetails>
             </PrivateRoute>
            
+        },
+         {
+            path: 'users',
+            hydrateFallbackElement: <Loader></Loader>,
+            loader:()=>fetch('https://lingomate-server-site.vercel.app/users'),
+            Component: Users
         },
         
          {

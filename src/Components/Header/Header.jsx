@@ -16,7 +16,7 @@ const Header = () => {
     <>
       <li><NavLink to="/" className={({ isActive }) => isActive ? 'font-bold text-teal-600' : ''}>Home</NavLink></li>
       <li><NavLink to="/findtutors" className={({ isActive }) => isActive ? 'font-bold text-teal-600' : ''}>Find Tutors</NavLink></li>
-      <li><NavLink to="/services" className={({ isActive }) => isActive ? 'font-bold text-teal-600' : ''}>Services</NavLink></li>
+      <li><NavLink to="/contacts" className={({ isActive }) => isActive ? 'font-bold text-teal-600' : ''}>Contacts</NavLink></li>
       <li><NavLink to="/company" className={({ isActive }) => isActive ? 'font-bold text-teal-600' : ''}>About</NavLink></li>
 
       {user && (

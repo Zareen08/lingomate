@@ -12,7 +12,7 @@ const TutorDetails = () => {
     fetch(`https://lingomate-server-site.vercel.app/tutorials/${id}`)
       .then(res => res.json())
       .then(data => setTutor(data))
-      .catch(err => toast.error('Failed to load tutor details'));
+      .catch(() => toast.error('Failed to load tutor details'));
   }, [id]);
 
   const handleBook = () => {
@@ -38,22 +38,40 @@ const TutorDetails = () => {
           toast.error('Booking failed.');
         }
       })
-      .catch(err => toast.error('Something went wrong'));
+      .catch(() => toast.error('Something went wrong'));
   };
 
   if (!tutor) return <p className="text-center">Loading...</p>;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-10">
-      <img src={tutor.image} alt={tutor.name} className="w-full h-64 object-cover rounded mb-6" />
-      <h2 className="text-3xl font-bold text-teal-600 mb-2">{tutor.name}</h2>
-      <p className="text-lg mb-1"><strong>Language:</strong> {tutor.category}</p>
-      <p className="text-lg mb-1"><strong>Price:</strong> ${tutor.price}</p>
-      <p className="text-lg mb-1"><strong>Review:</strong> {tutor.review || "No review yet"}</p>
-      <p className="text-md text-gray-700 mb-4">{tutor.description}</p>
+    <div className="max-w-3xl mx-auto px-4 py-10 dark:bg-gray-900 min-h-screen">
+      <img
+        src={tutor.image}
+        alt={tutor.name}
+        className="w-full h-64 object-cover rounded mb-6"
+        onError={e => (e.target.src = '/default-tutor.jpg')}
+      />
+      <div className="flex items-center gap-4 mb-6">
+        <img
+          src={tutor.userImage || '/default-user.png'}
+          alt="Tutor Profile"
+          className="w-14 h-14 rounded-full object-cover border"
+          onError={e => (e.target.src = '/default-user.png')}
+        />
+        <div>
+          <h2 className="text-3xl font-bold text-teal-600 dark:text-teal-400">{tutor.name}</h2>
+          <p className="text-gray-600 dark:text-gray-300">{tutor.email}</p>
+        </div>
+      </div>
+
+      <p className="text-lg mb-1 dark:text-gray-300"><strong>Language:</strong> {tutor.category}</p>
+      <p className="text-lg mb-1 dark:text-gray-300"><strong>Price:</strong> ${tutor.price}</p>
+      <p className="text-lg mb-1 dark:text-gray-300"><strong>Review:</strong> {tutor.review || 'No review yet'}</p>
+      <p className="text-md text-gray-700 dark:text-gray-400 mb-6">{tutor.description}</p>
+
       <button
         onClick={handleBook}
-        className="btn bg-teal-600 text-white hover:bg-teal-700 px-6 py-2"
+        className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2 rounded"
       >
         Book
       </button>

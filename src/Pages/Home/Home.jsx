@@ -6,6 +6,7 @@ import WhyChoose from '../WhyChoose/WhyChoose';
 import { Link, useLoaderData } from 'react-router';
 import LangCards from '../LangCards/LangCards';
 import NewsLetter from '../Newsletter/NewsLetter';
+import Featured from '../FeaturedTutorials/Featured';
 
 const Home = () => {
     const initialCats = useLoaderData();
@@ -21,7 +22,7 @@ const Home = () => {
             <h1 className="text-4xl md:text-5xl font-bold text-teal-700 mb-4">Featured Languages</h1>
             </div>
                <>
-                <div  className='mt-5 mb-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ' >
+                <div  className='mt-5 mb-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 ' >
                 {
                     langs.map(lang=> <Link to={`/findtutors/${lang.title}`}>
                     <LangCards 
@@ -35,6 +36,7 @@ const Home = () => {
                 </div>
                </>
             </div>
+            <Featured></Featured>
             <HowItWorks></HowItWorks>
             <WhyChoose></WhyChoose>
             <NewsLetter></NewsLetter>
